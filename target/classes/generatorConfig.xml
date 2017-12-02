@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+           "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	
+	<!-- 指定数据连接驱动jar地址 -->  
+    <classPathEntry location="E:\mybatisGenarator\mybatis-genarator\mybatis-generator\mysql-connector-java-5.1.30.jar" />  
+   <!--targetRuntime="MyBatis3" 目标环境
+      MyBatis3：豪华版，复杂多条件查询
+      MyBatis3Simple：helloWorld -->
+   <context id="tables" targetRuntime="MyBatis3" defaultModelType="flat">
+      <commentGenerator>
+         <!-- 是否去除自动生成的注释 true:是;false:否 -->
+         <property name="suppressAllComments" value="true" />
+      </commentGenerator>
+
+      <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+      <!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+         connectionURL="jdbc:mysql://rdszeb20x0v2y056beoro.mysql.rds.aliyuncs.com:3306/game_muzhike" 
+         userId="game_muzhike" password="j54gYBgi8yKEAKj54gV">
+      </jdbcConnection> -->
+      <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+      connectionURL="jdbc:mysql://rdszeb20x0v2y056beoro.mysql.rds.aliyuncs.com:3306/game_muzhike" 
+      userId="game_muzhike" password="j54gYBgi8yKEAKj54gV">    
+        </jdbcConnection>    
+
+      <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 
+         和 NUMERIC 类型解析为java.math.BigDecimal -->
+      <javaTypeResolver>
+         <property name="forceBigDecimals" value="true" />
+      </javaTypeResolver>
+
+      <!-- targetProject:生成Entity类的路径 -->
+      <javaModelGenerator targetProject="E:\mybatisGenarator\mybatis-genarator\src\main\java"
+         targetPackage="entity">
+         <!-- enableSubPackages:是否让schema作为包的后缀 -->
+         <property name="enableSubPackages" value="false" />
+         <!-- 从数据库返回的值被清理前后的空格 -->
+         <property name="trimStrings" value="true" />
+      </javaModelGenerator>
+
+      <!-- targetProject:XxxMapper.xml映射文件生成的路径 -->
+      <sqlMapGenerator targetProject="E:\mybatisGenarator\mybatis-genarator\src\main\java"
+         targetPackage="mapper">
+         <!-- enableSubPackages:是否让schema作为包的后缀 -->
+         <property name="enableSubPackages" value="false" />
+      </sqlMapGenerator>
+
+      <!-- targetPackage：Mapper接口生成的位置 -->
+      <javaClientGenerator type="XMLMAPPER"
+         targetProject="E:\mybatisGenarator\mybatis-genarator\src\main\java" targetPackage="dao">
+         <!-- enableSubPackages:是否让schema作为包的后缀 -->
+         <property name="enableSubPackages" value="false" />
+      </javaClientGenerator>
+
+      <!-- 数据库表名字和我们的entity类对应的映射指定 -->
+      <table tableName="ha_app_topic" domainObjectName="Topic" />
+
+   </context>
+</generatorConfiguration>

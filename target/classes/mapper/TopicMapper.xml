@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.TopicMapper" >
+  <resultMap id="BaseResultMap" type="entity.Topic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="vedio" property="vedio" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="gameid" property="gameid" jdbcType="INTEGER" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="showflag" property="showflag" jdbcType="INTEGER" />
+    <result column="source_type" property="sourceType" jdbcType="INTEGER" />
+    <result column="sharenum" property="sharenum" jdbcType="INTEGER" />
+    <result column="messagenum" property="messagenum" jdbcType="INTEGER" />
+    <result column="likenum" property="likenum" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="REAL" />
+    <result column="recommendtime" property="recommendtime" jdbcType="TIMESTAMP" />
+    <result column="recommendflag" property="recommendflag" jdbcType="INTEGER" />
+    <result column="groupflag" property="groupflag" jdbcType="INTEGER" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="pushtime" property="pushtime" jdbcType="TIMESTAMP" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="silenceflag" property="silenceflag" jdbcType="INTEGER" />
+    <result column="gametabname" property="gametabname" jdbcType="VARCHAR" />
+    <result column="homeflag" property="homeflag" jdbcType="BIT" />
+    <result column="styletype" property="styletype" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="entity.Topic" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="content2" property="content2" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, username, name, images, vedio, type, gameid, updatetime, createtime, status, 
+    showflag, source_type, sharenum, messagenum, likenum, grade, recommendtime, recommendflag, 
+    groupflag, starttime, endtime, pushtime, tags, silenceflag, gametabname, homeflag, 
+    styletype
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, content2
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="entity.TopicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ha_app_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="entity.TopicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ha_app_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ha_app_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ha_app_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.TopicExample" >
+    delete from ha_app_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.Topic" >
+    insert into ha_app_topic (id, uid, username, 
+      name, images, vedio, 
+      type, gameid, updatetime, 
+      createtime, status, showflag, 
+      source_type, sharenum, messagenum, 
+      likenum, grade, recommendtime, 
+      recommendflag, groupflag, starttime, 
+      endtime, pushtime, tags, 
+      silenceflag, gametabname, homeflag, 
+      styletype, content, content2
+      )
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{vedio,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{showflag,jdbcType=INTEGER}, 
+      #{sourceType,jdbcType=INTEGER}, #{sharenum,jdbcType=INTEGER}, #{messagenum,jdbcType=INTEGER}, 
+      #{likenum,jdbcType=INTEGER}, #{grade,jdbcType=REAL}, #{recommendtime,jdbcType=TIMESTAMP}, 
+      #{recommendflag,jdbcType=INTEGER}, #{groupflag,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{pushtime,jdbcType=TIMESTAMP}, #{tags,jdbcType=VARCHAR}, 
+      #{silenceflag,jdbcType=INTEGER}, #{gametabname,jdbcType=VARCHAR}, #{homeflag,jdbcType=BIT}, 
+      #{styletype,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR}, #{content2,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Topic" >
+    insert into ha_app_topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="images != null" >
+        images,
+      </if>
+      <if test="vedio != null" >
+        vedio,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="gameid != null" >
+        gameid,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="showflag != null" >
+        showflag,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="sharenum != null" >
+        sharenum,
+      </if>
+      <if test="messagenum != null" >
+        messagenum,
+      </if>
+      <if test="likenum != null" >
+        likenum,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="recommendtime != null" >
+        recommendtime,
+      </if>
+      <if test="recommendflag != null" >
+        recommendflag,
+      </if>
+      <if test="groupflag != null" >
+        groupflag,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="pushtime != null" >
+        pushtime,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="silenceflag != null" >
+        silenceflag,
+      </if>
+      <if test="gametabname != null" >
+        gametabname,
+      </if>
+      <if test="homeflag != null" >
+        homeflag,
+      </if>
+      <if test="styletype != null" >
+        styletype,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="content2 != null" >
+        content2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="vedio != null" >
+        #{vedio,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="gameid != null" >
+        #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showflag != null" >
+        #{showflag,jdbcType=INTEGER},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="sharenum != null" >
+        #{sharenum,jdbcType=INTEGER},
+      </if>
+      <if test="messagenum != null" >
+        #{messagenum,jdbcType=INTEGER},
+      </if>
+      <if test="likenum != null" >
+        #{likenum,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=REAL},
+      </if>
+      <if test="recommendtime != null" >
+        #{recommendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendflag != null" >
+        #{recommendflag,jdbcType=INTEGER},
+      </if>
+      <if test="groupflag != null" >
+        #{groupflag,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushtime != null" >
+        #{pushtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="silenceflag != null" >
+        #{silenceflag,jdbcType=INTEGER},
+      </if>
+      <if test="gametabname != null" >
+        #{gametabname,jdbcType=VARCHAR},
+      </if>
+      <if test="homeflag != null" >
+        #{homeflag,jdbcType=BIT},
+      </if>
+      <if test="styletype != null" >
+        #{styletype,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content2 != null" >
+        #{content2,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.TopicExample" resultType="java.lang.Integer" >
+    select count(*) from ha_app_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ha_app_topic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null" >
+        images = #{record.images,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vedio != null" >
+        vedio = #{record.vedio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameid != null" >
+        gameid = #{record.gameid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.showflag != null" >
+        showflag = #{record.showflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.sourceType != null" >
+        source_type = #{record.sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.sharenum != null" >
+        sharenum = #{record.sharenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.messagenum != null" >
+        messagenum = #{record.messagenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.likenum != null" >
+        likenum = #{record.likenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=REAL},
+      </if>
+      <if test="record.recommendtime != null" >
+        recommendtime = #{record.recommendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recommendflag != null" >
+        recommendflag = #{record.recommendflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupflag != null" >
+        groupflag = #{record.groupflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushtime != null" >
+        pushtime = #{record.pushtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tags != null" >
+        tags = #{record.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.silenceflag != null" >
+        silenceflag = #{record.silenceflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.gametabname != null" >
+        gametabname = #{record.gametabname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeflag != null" >
+        homeflag = #{record.homeflag,jdbcType=BIT},
+      </if>
+      <if test="record.styletype != null" >
+        styletype = #{record.styletype,jdbcType=BIT},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content2 != null" >
+        content2 = #{record.content2,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update ha_app_topic
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
+      vedio = #{record.vedio,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      gameid = #{record.gameid,jdbcType=INTEGER},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      showflag = #{record.showflag,jdbcType=INTEGER},
+      source_type = #{record.sourceType,jdbcType=INTEGER},
+      sharenum = #{record.sharenum,jdbcType=INTEGER},
+      messagenum = #{record.messagenum,jdbcType=INTEGER},
+      likenum = #{record.likenum,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=REAL},
+      recommendtime = #{record.recommendtime,jdbcType=TIMESTAMP},
+      recommendflag = #{record.recommendflag,jdbcType=INTEGER},
+      groupflag = #{record.groupflag,jdbcType=INTEGER},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      pushtime = #{record.pushtime,jdbcType=TIMESTAMP},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      silenceflag = #{record.silenceflag,jdbcType=INTEGER},
+      gametabname = #{record.gametabname,jdbcType=VARCHAR},
+      homeflag = #{record.homeflag,jdbcType=BIT},
+      styletype = #{record.styletype,jdbcType=BIT},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      content2 = #{record.content2,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ha_app_topic
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
+      vedio = #{record.vedio,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      gameid = #{record.gameid,jdbcType=INTEGER},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      showflag = #{record.showflag,jdbcType=INTEGER},
+      source_type = #{record.sourceType,jdbcType=INTEGER},
+      sharenum = #{record.sharenum,jdbcType=INTEGER},
+      messagenum = #{record.messagenum,jdbcType=INTEGER},
+      likenum = #{record.likenum,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=REAL},
+      recommendtime = #{record.recommendtime,jdbcType=TIMESTAMP},
+      recommendflag = #{record.recommendflag,jdbcType=INTEGER},
+      groupflag = #{record.groupflag,jdbcType=INTEGER},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      pushtime = #{record.pushtime,jdbcType=TIMESTAMP},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      silenceflag = #{record.silenceflag,jdbcType=INTEGER},
+      gametabname = #{record.gametabname,jdbcType=VARCHAR},
+      homeflag = #{record.homeflag,jdbcType=BIT},
+      styletype = #{record.styletype,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Topic" >
+    update ha_app_topic
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="vedio != null" >
+        vedio = #{vedio,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="gameid != null" >
+        gameid = #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showflag != null" >
+        showflag = #{showflag,jdbcType=INTEGER},
+      </if>
+      <if test="sourceType != null" >
+        source_type = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="sharenum != null" >
+        sharenum = #{sharenum,jdbcType=INTEGER},
+      </if>
+      <if test="messagenum != null" >
+        messagenum = #{messagenum,jdbcType=INTEGER},
+      </if>
+      <if test="likenum != null" >
+        likenum = #{likenum,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=REAL},
+      </if>
+      <if test="recommendtime != null" >
+        recommendtime = #{recommendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendflag != null" >
+        recommendflag = #{recommendflag,jdbcType=INTEGER},
+      </if>
+      <if test="groupflag != null" >
+        groupflag = #{groupflag,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushtime != null" >
+        pushtime = #{pushtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="silenceflag != null" >
+        silenceflag = #{silenceflag,jdbcType=INTEGER},
+      </if>
+      <if test="gametabname != null" >
+        gametabname = #{gametabname,jdbcType=VARCHAR},
+      </if>
+      <if test="homeflag != null" >
+        homeflag = #{homeflag,jdbcType=BIT},
+      </if>
+      <if test="styletype != null" >
+        styletype = #{styletype,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content2 != null" >
+        content2 = #{content2,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="entity.Topic" >
+    update ha_app_topic
+    set uid = #{uid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      vedio = #{vedio,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      gameid = #{gameid,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      showflag = #{showflag,jdbcType=INTEGER},
+      source_type = #{sourceType,jdbcType=INTEGER},
+      sharenum = #{sharenum,jdbcType=INTEGER},
+      messagenum = #{messagenum,jdbcType=INTEGER},
+      likenum = #{likenum,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=REAL},
+      recommendtime = #{recommendtime,jdbcType=TIMESTAMP},
+      recommendflag = #{recommendflag,jdbcType=INTEGER},
+      groupflag = #{groupflag,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      pushtime = #{pushtime,jdbcType=TIMESTAMP},
+      tags = #{tags,jdbcType=VARCHAR},
+      silenceflag = #{silenceflag,jdbcType=INTEGER},
+      gametabname = #{gametabname,jdbcType=VARCHAR},
+      homeflag = #{homeflag,jdbcType=BIT},
+      styletype = #{styletype,jdbcType=BIT},
+      content = #{content,jdbcType=LONGVARCHAR},
+      content2 = #{content2,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Topic" >
+    update ha_app_topic
+    set uid = #{uid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      vedio = #{vedio,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      gameid = #{gameid,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      showflag = #{showflag,jdbcType=INTEGER},
+      source_type = #{sourceType,jdbcType=INTEGER},
+      sharenum = #{sharenum,jdbcType=INTEGER},
+      messagenum = #{messagenum,jdbcType=INTEGER},
+      likenum = #{likenum,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=REAL},
+      recommendtime = #{recommendtime,jdbcType=TIMESTAMP},
+      recommendflag = #{recommendflag,jdbcType=INTEGER},
+      groupflag = #{groupflag,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      pushtime = #{pushtime,jdbcType=TIMESTAMP},
+      tags = #{tags,jdbcType=VARCHAR},
+      silenceflag = #{silenceflag,jdbcType=INTEGER},
+      gametabname = #{gametabname,jdbcType=VARCHAR},
+      homeflag = #{homeflag,jdbcType=BIT},
+      styletype = #{styletype,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
